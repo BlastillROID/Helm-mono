@@ -1,0 +1,14 @@
+node_modules/
+dist/
+coverage/
+.env
+.npmrc
+*.log
+*.tgz
+.DS_Store
+.idea/
+.vscode/
+*.swp
+helm.monorepo.json
+package-lock.json
+.nyc_output/
