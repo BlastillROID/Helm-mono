@@ -11,21 +11,27 @@
 - **Bump Chart Versions** (`helm-mono version <chart> patch|minor|major|<specific version>`)
 - **Push Charts to Harbor** (`helm-mono push <chart>` or `helm-mono push-all`)
 
-## Installation
 
-### 1️⃣ Install Dependencies
-Ensure you have **Node.js (>=14.0.0)** installed. Then, run:
+## Using `helm-mono` in Another Helm Monorepo
+If you have another Helm monorepo and want to use `helm-mono`, follow these steps:
+
+### 1️⃣ Install `helm-mono` from NPM
 ```sh
-npm install
+npm install -g helm-mono
 ```
 
-### 2️⃣ Link the CLI Tool
-To make `helm-mono` available globally:
+### 2️⃣ Initialize the Helm Monorepo
 ```sh
-npm link
+helm-mono init
 ```
+This sets up the `helm.monorepo.json` file in your new monorepo.
 
-Now, you can run `helm-mono` from anywhere in your terminal.
+### 3️⃣ Use `helm-mono` Commands
+```sh
+helm-mono list        # List charts
+helm-mono build-all   # Build all charts
+helm-mono push-all    # Push all charts to Harbor
+```
 
 ## Usage
 
@@ -80,6 +86,22 @@ helm-mono push <chart> [-u username] [-p password]
 helm-mono push-all [-u username] [-p password]
 ```
 The CLI uses the Harbor URL and project name from `helm.monorepo.json`.
+
+## Installation (for development)
+
+### 1️⃣ Install Dependencies
+Ensure you have **Node.js (>=14.0.0)** installed. Then, run:
+```sh
+npm install
+```
+
+### 2️⃣ Link the CLI Tool
+To make `helm-mono` available globally:
+```sh
+npm link
+```
+
+Now, you can run `helm-mono` from anywhere in your terminal.
 
 ## Running Tests
 ```sh
