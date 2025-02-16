@@ -3,7 +3,7 @@
     "charts/*"
   ],
   "harbor": {
-    "url": "https://harbor.fednot.be",
-    "project": "fednot-charts"
+    "url": "https://harbor.test.com",
+    "project": "test-charts"
   }
 }
