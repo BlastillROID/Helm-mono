@@ -1,0 +1,9 @@
+{
+  "charts": [
+    "charts/*"
+  ],
+  "harbor": {
+    "url": "https://harbor.fednot.be",
+    "project": "fednot-charts"
+  }
+}

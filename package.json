@@ -1,0 +1,34 @@
+{
+  "name": "helm-mono",
+  "version": "1.0.0",
+  "description": "Helm Monorepo Management CLI",
+  "main": "bin/helm-mono.js",
+  "bin": {
+    "helm-mono": "bin/helm-mono.js"
+  },
+  "scripts": {
+    "start": "node bin/helm-mono.js",
+    "test": "jest"
+  },
+  "dependencies": {
+    "chalk": "^4.1.2",
+    "commander": "^11.1.0",
+    "js-yaml": "^4.1.0",
+    "shelljs": "^0.8.5"
+  },
+  "engines": {
+    "node": ">=14.0.0"
+  },
+  "keywords": [
+    "helm",
+    "monorepo",
+    "cli",
+    "charts",
+    "kubernetes"
+  ],
+  "author": "Mounir Missaoui",
+  "license": "MIT",
+  "devDependencies": {
+    "jest": "^29.7.0"
+  }
+}
