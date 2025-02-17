@@ -1,8 +1,10 @@
 // src/commands/buildAll.js (Improved Build All Charts Command with Dependency Support)
 const shell = require('shelljs');
 const chalk = require('chalk');
+const path = require('path');
 const { loadConfig } = require('../utils/config');
 const { resolveDependencies } = require('../utils/dependencyResolver');
+
 
 async function buildAllChartsCommand(options) {
   try {

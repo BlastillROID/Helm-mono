@@ -1,6 +1,6 @@
 {
   "name": "helm-mono",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Helm Monorepo Management CLI",
   "main": "bin/helm-mono.js",
   "bin": {
