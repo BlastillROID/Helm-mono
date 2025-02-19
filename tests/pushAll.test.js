@@ -1,5 +1,9 @@
 // tests/pushAll.test.js (Unit Test for Push-All Command)
 const { pushAllChartsCommand } = require('../src/commands/push');
+const shell = require('shelljs');
+const chalk = require('chalk');
+const path = require('path');
+const fs = require('fs')
 
 describe('Push-All Command', () => {
   beforeEach(() => {

@@ -2,16 +2,32 @@
 const shell = require('shelljs');
 const chalk = require('chalk');
 const path = require('path');
+const fs = require('fs')
 const { loadConfig } = require('../utils/config');
 const { resolveDependencies } = require('../utils/dependencyResolver');
-
 
 async function buildAllChartsCommand(options) {
   try {
     const config = loadConfig();
     let chartPaths = config.charts.map((c) => path.resolve(process.cwd(), c));
     
-    if (!chartPaths.length) {
+    let charts = []
+    chartPaths.forEach((baseDir) => {
+          if (fs.existsSync(baseDir)) {
+            const subDirs = fs.readdirSync(baseDir, { withFileTypes: true })
+              .filter((dirent) => dirent.isDirectory())
+              .map((dirent) => path.join(baseDir, dirent.name));
+    
+            subDirs.forEach((chartPath) => {
+              const chartYamlPath = path.join(chartPath, 'Chart.yaml');
+              if (fs.existsSync(chartYamlPath)) {
+                charts.push(chartPath);
+              }
+            });
+          }
+        });
+    
+    if (!charts.length) {
       console.error(chalk.red("Error: No charts found in configured paths."));
       process.exit(1);
     }
@@ -29,12 +45,12 @@ async function buildAllChartsCommand(options) {
 
     let failedCharts = [];
     await Promise.all(
-      chartPaths.map(async (chartPath) => {
-        console.log(chalk.blue(`Building Helm chart: ${chartPath}`));
-        let helmCommand = `helm package ${chartPath} --destination ${outputDir}`;
+      charts.map(async (chart) => {
+        console.log(chalk.blue(`Building Helm chart: ${chart}`));
+        let helmCommand = `helm package ${chart} --destination ${outputDir}`;
         if (shell.exec(helmCommand).code !== 0) {
-          console.error(chalk.red(`Failed to build Helm chart: ${chartPath}`));
-          failedCharts.push(chartPath);
+          console.error(chalk.red(`Failed to build Helm chart: ${chart}`));
+          failedCharts.push(chart);
         }
       })
     );

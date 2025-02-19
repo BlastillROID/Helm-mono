@@ -2,6 +2,7 @@
 const shell = require('shelljs');
 const chalk = require('chalk');
 const path = require('path');
+const fs = require('fs');
 const { loadConfig } = require('../utils/config');
 
 function pushChartCommand(chart, options) {
@@ -31,9 +32,25 @@ function pushCharts(charts, options) {
     if (options.username && options.password) {
       shell.exec(`helm registry login ${config.harbor.url} --username ${options.username} --password ${options.password}`);
     }
+    
+    let foundCharts = []
+    chartPaths.forEach((baseDir) => {
+          if (fs.existsSync(baseDir)) {
+            const subDirs = fs.readdirSync(baseDir, { withFileTypes: true })
+              .filter((dirent) => dirent.isDirectory())
+              .map((dirent) => path.join(baseDir, dirent.name));
 
+            subDirs.forEach((chartPath) => {
+              const chartYamlPath = path.join(chartPath, 'Chart.yaml');
+              if (fs.existsSync(chartYamlPath)) {
+                foundCharts.push(chartPath);
+              }
+            });
+          }
+        });
+    
     charts.forEach((chart) => {
-      const chartPath = chartPaths.find((p) => p.includes(chart));
+      const chartPath = foundCharts.find((p) => p.includes(chart));
       if (!chartPath) {
         console.error(chalk.red(`Error: Chart '${chart}' not found in configured paths.`));
         return;

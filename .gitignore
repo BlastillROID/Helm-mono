@@ -12,3 +12,4 @@ coverage/
 helm.monorepo.json
 package-lock.json
 .nyc_output/
+charts/**

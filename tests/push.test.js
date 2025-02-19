@@ -1,5 +1,9 @@
 // tests/push.test.js (Unit Test for Push Command)
 const { pushChartCommand } = require('../src/commands/push');
+const shell = require('shelljs');
+const chalk = require('chalk');
+const path = require('path');
+const fs = require('fs')
 
 describe('Push Command', () => {
   beforeEach(() => {

@@ -1,6 +1,6 @@
 {
   "charts": [
-    "charts/*"
+    "charts"
   ],
   "harbor": {
     "url": "https://harbor.test.com",

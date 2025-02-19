@@ -22,7 +22,7 @@ describe('Init Command', () => {
 
   it('should create helm.monorepo.json with valid input', async () => {
     mockRl.question
-      .mockImplementationOnce((_, cb) => cb('charts/*'))
+      .mockImplementationOnce((_, cb) => cb('/mnt/c/Users/mmissaoui/Desktop/Playground/Helm-mono/charts/*'))
       .mockImplementationOnce((_, cb) => cb('https://harbor.example.com'))
       .mockImplementationOnce((_, cb) => cb('my-project'));
 
@@ -32,7 +32,7 @@ describe('Init Command', () => {
       path.join(process.cwd(), 'helm.monorepo.json'),
       JSON.stringify(
         {
-          charts: ['charts/*'],
+          charts: ['/mnt/c/Users/mmissaoui/Desktop/Playground/Helm-mono/charts/*'],
           harbor: {
             url: 'https://harbor.example.com',
             project: 'my-project'

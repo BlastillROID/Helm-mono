@@ -13,7 +13,7 @@ async function initCommand() {
   const askQuestion = (query) => new Promise((resolve) => rl.question(query, resolve));
 
   try {
-    const charts = await askQuestion(chalk.cyan("Enter chart paths (comma-separated): "));
+    const charts = await askQuestion(chalk.cyan("Enter chart folder paths e.g: charts/* (comma-separated): "));
     const chartPaths = charts.split(',').map((c) => c.trim()).filter(Boolean);
 
     if (chartPaths.length === 0) {

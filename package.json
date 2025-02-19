@@ -1,6 +1,6 @@
 {
   "name": "helm-mono",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "Helm Monorepo Management CLI",
   "main": "bin/helm-mono.js",
   "bin": {
@@ -30,5 +30,8 @@
   "license": "MIT",
   "devDependencies": {
     "jest": "^29.7.0"
+  },
+  "directories": {
+    "test": "tests"
   }
 }

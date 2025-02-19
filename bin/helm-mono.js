@@ -8,11 +8,12 @@ const { buildAllChartsCommand } = require('../src/commands/buildAll');
 const { buildAffectedChartsCommand } = require('../src/commands/buildAffected');
 const { versionBumpCommand } = require('../src/commands/version');
 const { pushChartCommand, pushAllChartsCommand } = require('../src/commands/push');
+const pjson = require('../package.json');
 
 program
   .name('helm-mono')
   .description('Helm Monorepo Management CLI')
-  .version('1.0.0');
+  .version(pjson.version);
 
 // Register Commands
 program.command('init')

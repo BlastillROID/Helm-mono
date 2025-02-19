@@ -1,18 +1,39 @@
 // src/commands/build.js (Improved Build Command with Dependency Support)
-const shell = require('shelljs');
-const chalk = require('chalk');
-const path = require('path');
-const { loadConfig } = require('../utils/config');
-const { resolveDependencies } = require('../utils/dependencyResolver');
+const shell = require("shelljs");
+const chalk = require("chalk");
+const path = require("path");
+const fs = require('fs')
+const { loadConfig } = require("../utils/config");
+const { resolveDependencies } = require("../utils/dependencyResolver");
 
 async function buildChartCommand(chart, options) {
   try {
     const config = loadConfig();
     let chartPaths = config.charts.map((c) => path.resolve(process.cwd(), c));
-    
-    const chartPath = chartPaths.find((p) => p.includes(chart));
+
+    let charts = [];
+    chartPaths.forEach((baseDir) => {
+      if (fs.existsSync(baseDir)) {
+        const subDirs = fs
+          .readdirSync(baseDir, { withFileTypes: true })
+          .filter((dirent) => dirent.isDirectory())
+          .map((dirent) => path.join(baseDir, dirent.name));
+
+        subDirs.forEach((chartPath) => {
+          const chartYamlPath = path.join(chartPath, "Chart.yaml");
+          if (fs.existsSync(chartYamlPath)) {
+            charts.push(chartPath);
+          }
+        });
+      }
+    });
+  console.log(charts);
+  
+    const chartPath = charts.find((p) => p.includes(chart));
     if (!chartPath) {
-      console.error(chalk.red(`Error: Chart '${chart}' not found in configured paths.`));
+      console.error(
+        chalk.red(`Error: Chart '${chart}' not found in configured paths.`)
+      );
       process.exit(1);
     }
 
@@ -41,7 +62,11 @@ async function buildChartCommand(chart, options) {
     );
 
     if (failedCharts.length > 0) {
-      console.error(chalk.red(`The following charts failed to build: ${failedCharts.join(', ')}`));
+      console.error(
+        chalk.red(
+          `The following charts failed to build: ${failedCharts.join(", ")}`
+        )
+      );
       process.exit(1);
     }
 

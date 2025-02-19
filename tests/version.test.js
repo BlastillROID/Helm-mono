@@ -1,6 +1,9 @@
 // tests/version.test.js (Unit Test for Version Command)
 const { versionBumpCommand } = require('../src/commands/version');
-const yaml = require('js-yaml');
+const fs = require("fs");
+const path = require("path");
+const chalk = require("chalk");
+const yaml = require("js-yaml");
 
 jest.mock('fs');
 jest.mock('js-yaml');
